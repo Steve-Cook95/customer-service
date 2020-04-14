@@ -21,16 +21,17 @@ def test_get_customer_id(get_customer, web_client, customer_repository):
     assert response.get_json() == dict(customerId='12345',
                                        firstName='Joe',
                                        surname='Bloggs')
-                                      
+
+
 @patch('customer_service.model.commands.update_customer')
 def test_update_customer(update_customer, web_client, customer_repository):
 
     update_customer.return_value = Customer(customer_id=12345,
-                                         first_name='Joe',
-                                         surname='Bloggs')
-   
+                                            first_name='Joe',
+                                            surname='Bloggs')
+
     response = web_client.put('/customers/12345/Joe/Bloggs')
-    
+
     assert response.is_json
     assert response.get_json()['firstName'] == "Joe"
 

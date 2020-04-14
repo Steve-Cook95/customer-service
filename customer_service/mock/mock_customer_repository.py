@@ -21,7 +21,7 @@ class MockCustomerRepository:
             raise CustomerNotFound()
 
         return self.customers[id]
-        
+
     def update_customer(self, customer):
         print(customer)
         customer_object = self.fetch_by_id(int(customer.customer_id))

@@ -25,7 +25,8 @@ def test_store_new_customer(customer_repository):
     customer_repository.store(jez)
     assert customer_repository.fetch_by_id(nicole.customer_id) is nicole
     assert customer_repository.fetch_by_id(jez.customer_id) is jez
-    
+
+
 def test_update_customer(customer_repository):
     nicole = Customer(customer_id=123, first_name="Nicole", surname="Forsgren")
     jez = Customer(customer_id=123, first_name="Jez", surname="Humble")
@@ -33,4 +34,3 @@ def test_update_customer(customer_repository):
     customer_repository.update_customer(jez)
     assert customer_repository.fetch_by_id(123).first_name == jez.first_name
     assert customer_repository.fetch_by_id(123).surname == jez.surname
-    
