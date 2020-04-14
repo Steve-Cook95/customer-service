@@ -33,7 +33,19 @@ def test_update_customer(update_customer, web_client, customer_repository):
     response = web_client.put('/customers/12345/Joe/Bloggs')
 
     assert response.is_json
+    assert response.get_json()['customerID'] == 12345
     assert response.get_json()['firstName'] == "Joe"
+    assert response.get_json()['surname'] == "Bloggs"
+
+
+@patch('customer_service.model.commands.update_customer')
+def test_update_customer_special_char_input(
+        update_customer, web_client, customer_repository):
+    update_customer.return_value = Customer(customer_id=12345,
+                                            first_name='Joe',
+                                            surname='Bloggs')
+    response = web_client.put('/customers/12345/Joe4/Bloggs0')
+    assert response.status_code == 400
 
 
 @patch('customer_service.model.commands.get_customer')

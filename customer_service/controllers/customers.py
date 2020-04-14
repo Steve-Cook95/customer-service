@@ -50,6 +50,11 @@ def create_customer():
     '/<string:customer_id>/<string:first_name>/<string:surname>',
     methods=['PUT'])
 def update_customer(customer_id, first_name, surname):
+
+    if (not first_name.isalpha()) or (
+            not surname.isalpha()) or (not customer_id.isnumeric()):
+        return jsonify(dict(message='Invalid input')), HTTPStatus.BAD_REQUEST
+
     customer_repository = current_app.customer_repository
 
     customer = commands.update_customer(
@@ -58,7 +63,7 @@ def update_customer(customer_id, first_name, surname):
         surname,
         customer_repository)
 
-    return jsonify(customerID=str(customer.customer_id),
+    return jsonify(customerID=int(customer.customer_id),
                    firstName=customer.first_name,
                    surname=customer.surname), HTTPStatus.OK
 
