@@ -27,3 +27,10 @@ class PostgreSQLCustomerRepository:
                 .one()
         except NoResultFound:
             raise CustomerNotFound()
+            
+    def update(self, customer):
+        customer_object = self.session.fetch_by_id(customer.customer_id)
+        customer_object.first_name = customer.first_name
+        customer_object.surname = customer.surname
+        self.session.commit()
+        

@@ -44,6 +44,21 @@ def create_customer():
     return jsonify(customerId=str(customer_id),
                    firstName=body['firstName'],
                    surname=body['surname']), HTTPStatus.CREATED
+                   
+@customers.route('/<string:customer_id>/<string:first_name>/<string:surname>', methods=['PUT'])
+def update_customer(customer_id, first_name, surname):
+    customer_repository = current_app.customer_repository
+    
+    
+    customer = commands.update_customer(
+        customer_id,
+        first_name,
+        surname,
+        customer_repository)
+    
+    return jsonify(customerID = str(customer.customer_id),
+                   firstName = customer.first_name,
+                   surname = customer.surname), HTTPStatus.OK
 
 
 @customers.errorhandler(CustomerNotFound)
